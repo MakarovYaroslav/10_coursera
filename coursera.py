@@ -23,10 +23,9 @@ def get_course_info(course_slug):
     course_info = {}
     try:
         r = requests.get(course_slug)
-        soup = BeautifulSoup(r.content, "lxml")
     except requests.exceptions.ConnectionError:
-        get_course_info(course_slug)
-        return
+        return get_course_info(course_slug)
+    soup = BeautifulSoup(r.content, "lxml")
     try:
         for span in soup.find_all('div', "ratings-text bt3-hidden-xs")[0]:
             course_info['rating'] = span.text
